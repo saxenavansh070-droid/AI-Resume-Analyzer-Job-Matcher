@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="theme-color" content="#f4f5ef">
+	<title>Next Role - Find work that fits</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&family=Newsreader:ital,opsz,wght@1,6..72,500;1,6..72,600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div class="app-shell">
+		<header class="topbar">
+			<a class="brand" href="#top" aria-label="Next Role home">
+				<span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+				<span>next<span class="brand-light">role</span></span>
+			</a>
+			<nav class="top-nav" aria-label="Main navigation">
+				<a class="nav-link active" href="#matches">Explore roles</a>
+				<a class="nav-link" href="#profile">Your profile</a>
+			</nav>
+			<div class="account-actions">
+				<button class="signin-button" type="button" data-auth-mode="signin">Sign in</button>
+				<button class="signup-button" type="button" data-auth-mode="signup">Create account</button>
+				<span class="account-email" id="account-email" hidden></span>
+				<button class="signin-button" id="signout-button" type="button" hidden>Sign out</button>
+			</div>
+		</header>
+
+		<main id="top">
+			<section class="intro" aria-labelledby="page-title">
+				<div>
+					<p class="eyebrow"><span class="eyebrow-line"></span> YOUR NEXT CHAPTER, MADE CLEARER</p>
+					<h1 id="page-title">Find work that <span>fits you.</span></h1>
+					<p class="intro-copy">Bring your experience. We will surface roles that make sense for where you have been and where you could go.</p>
+				</div>
+				<div class="intro-stamp" aria-label="Profile matching runs locally in your browser">
+					<span class="stamp-mark">N</span>
+					<span><strong>Your profile stays yours.</strong><small>Matching happens on this device.</small></span>
+				</div>
+			</section>
+
+			<section class="workspace" aria-label="Profile and job recommendations">
+				<aside class="profile-panel" id="profile">
+					<div class="section-heading">
+						  <div class="section-index">1</div>
+						<div><p class="section-kicker">START WITH YOU</p><h2>Your experience</h2></div>
+					</div>
+					<p class="panel-intro">Use your LinkedIn profile PDF, or paste the text from your profile.</p>
+
+					<div class="input-tabs" role="tablist" aria-label="Choose profile input">
+						<button class="input-tab selected" id="upload-tab" role="tab" aria-selected="true" aria-controls="upload-panel" type="button">Upload a file</button>
+						<button class="input-tab" id="paste-tab" role="tab" aria-selected="false" aria-controls="paste-panel" type="button">Paste text</button>
+					</div>
+
+					  <div class="tab-panel" id="upload-panel" role="tabpanel" aria-labelledby="upload-tab">
+						<label class="dropzone" id="dropzone" for="profile-file">
+							<span class="upload-symbol" aria-hidden="true"><span></span></span>
+							<strong>Drop your profile here</strong>
+							<span class="dropzone-sub">or <span class="browse-link">browse files</span></span>
+							<span class="file-types">PDF, Word document, or plain text, up to 10 MB</span>
+						</label>
+						<input id="profile-file" class="visually-hidden" type="file" accept=".pdf,.docx,.txt,.md,text/plain,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+						<p class="upload-status" id="upload-status" aria-live="polite">Your file is read locally and is not uploaded to a server.</p>
+					</div>
+
+					  <div class="tab-panel" id="paste-panel" role="tabpanel" aria-labelledby="paste-tab" hidden>
+						<label class="field-label" for="profile-text">Profile summary, experience, and skills</label>
+						<textarea id="profile-text" spellcheck="true" placeholder="Paste your LinkedIn About, Experience, and Skills sections here..."></textarea>
+						<div class="text-meta"><span id="character-count">0 characters</span><button class="text-button" id="clear-profile" type="button">Clear text</button></div>
+					</div>
+
+					<div class="profile-actions">
+						<button class="primary-button" id="analyze-button" type="button"><span>Find my roles</span><span class="button-arrow" aria-hidden="true">&#8599;</span></button>
+						<button class="sample-button" id="sample-button" type="button">Try a sample profile</button>
+					</div>
+					<p class="privacy-footnote"><span class="privacy-lock" aria-hidden="true"></span> Your profile text never leaves this browser.</p>
+
+					<div class="method-note">
+						<span class="method-dot" aria-hidden="true"></span>
+						<p><strong>A useful starting point, not a verdict.</strong> Matches are based on shared skills and role keywords, not an AI hiring decision.</p>
+					</div>
+				</aside>
+
+				<section class="results-panel" id="matches" aria-labelledby="matches-title">
+					<div class="results-heading">
+						  <div class="section-heading results-title-block">
+							  <div class="section-index">2</div>
+							<div><p class="section-kicker">POSSIBLE NEXT MOVES</p><h2 id="matches-title">Roles for you</h2></div>
+						</div>
+						<div class="result-count" id="result-count" aria-live="polite"><strong>0</strong><span>roles found</span></div>
+					</div>
+					<div class="match-summary" id="match-summary" aria-live="polite">
+						<span class="summary-mark" aria-hidden="true">+</span>
+						<span id="summary-text">Add your profile to see roles matched to your experience.</span>
+					</div>
+					<div class="results-toolbar" id="results-toolbar" hidden>
+						<label class="filter-control search-control" for="role-search"><span class="control-label">Search roles</span><input id="role-search" type="search" placeholder="Title, company, or skill"></label>
+						<label class="filter-control" for="mode-filter"><span class="control-label">Work setup</span><select id="mode-filter"><option value="all">Any setup</option><option value="remote">Remote</option><option value="hybrid">Hybrid</option><option value="onsite">On-site</option></select></label>
+						<label class="filter-control sort-control" for="sort-filter"><span class="control-label">Sort by</span><select id="sort-filter"><option value="relevance">Best match</option><option value="salary">Highest salary</option><option value="title">Role title</option></select></label>
+						<button class="saved-filter" id="saved-filter" type="button" aria-pressed="false"><span class="saved-star" aria-hidden="true">&#9734;</span><span>Saved</span><span id="saved-count">0</span></button>
+					</div>
+					<div class="matches-list" id="matches-list" aria-live="polite"></div>
+					<div class="empty-state" id="empty-state">
+						<span class="empty-mark" aria-hidden="true">N</span>
+						<h3 id="empty-title">Your matches will show up here</h3>
+						<p id="empty-copy">Upload a profile or paste your experience to get started.</p>
+					</div>
+					<p class="results-footnote">Role examples for exploration. Availability, compensation, and requirements vary by employer.</p>
+				</section>
+			</section>
+
+			<footer class="page-footer"><span>NEXTROLE <span class="footer-separator">/</span> A clearer way to explore what's next.</span><span>Not affiliated with LinkedIn.</span></footer>
+		</main>
+	</div>
+	<dialog class="auth-dialog" id="auth-dialog" aria-labelledby="auth-title">
+		<div class="auth-dialog-head">
+			<a class="brand" href="#top" aria-label="Next Role home">
+				<span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+				<span>next<span class="brand-light">role</span></span>
+			</a>
+			<button class="dialog-close" id="close-auth" type="button" aria-label="Close">&times;</button>
+		</div>
+		<div class="auth-content">
+			<p class="section-kicker">YOUR NEXT CHAPTER</p>
+			<h2 id="auth-title">Welcome back</h2>
+				<p class="auth-description" id="auth-description">Sign in to continue exploring your next role.</p>
+			<form id="auth-form">
+				<label class="auth-field" id="name-field" hidden>
+					<span>Your name</span>
+					<input id="auth-name" name="name" type="text" autocomplete="name" placeholder="Jordan Lee">
+				</label>
+				<label class="auth-field">
+					<span>Email address</span>
+					<input id="auth-email" name="email" type="email" autocomplete="email" placeholder="you@example.com" required>
+				</label>
+				<label class="auth-field">
+					<span>Password</span>
+					<input id="auth-password" name="password" type="password" autocomplete="current-password" minlength="8" placeholder="At least 8 characters" required>
+				</label>
+				<p class="auth-notice" id="auth-notice" role="status"></p>
+				<button class="primary-button auth-submit" id="auth-submit" type="submit"><span>Sign in</span><span class="button-arrow" aria-hidden="true">&#8599;</span></button>
+			</form>
+			<p class="auth-switch" id="auth-switch">New to Next Role? <button type="button" data-auth-mode="signup">Create an account</button></p>
+		</div>
+	</dialog>
+
+	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+	<script src="supabase-config.js"></script>
+	<script>
+		const sampleProfile = `Product-minded data analyst with 5 years of experience turning customer and business data into clear decisions. At Northstar, I built SQL pipelines and dashboards in Tableau and Looker for product, marketing, and operations teams. I use Python, Excel, and A/B testing to investigate funnels, define KPIs, and measure experiments. I partner with product managers and engineers, present findings to executives, and mentor two junior analysts. Previously, I worked in customer insights and helped improve activation by 18%.`;
+
+		const roles = [
+			{ title: "Product Data Analyst", company: "Northstar Labs", location: "New York, NY", mode: "hybrid", salary: 118000, salaryLabel: "$105k - $131k", skills: ["SQL", "Python", "Tableau", "A/B testing", "product analytics", "dashboards"], summary: "Turn product usage data into clear experiments and decisions with a close-knit product team." },
+			{ title: "Senior Business Intelligence Analyst", company: "Common Thread", location: "Remote - US", mode: "remote", salary: 126000, salaryLabel: "$112k - $140k", skills: ["SQL", "Looker", "dashboards", "KPI", "stakeholder", "analytics"], summary: "Own reporting foundations and help leaders understand the metrics behind business performance." },
+			{ title: "Growth Analyst", company: "Goodside", location: "Brooklyn, NY", mode: "hybrid", salary: 121000, salaryLabel: "$108k - $134k", skills: ["A/B testing", "Python", "SQL", "experiments", "marketing", "customer"], summary: "Find opportunities across the customer journey and measure what actually improves growth." },
+			{ title: "Analytics Engineer", company: "Fieldwork", location: "Remote - US", mode: "remote", salary: 139000, salaryLabel: "$124k - $154k", skills: ["SQL", "Python", "data pipelines", "Looker", "dbt", "dashboards"], summary: "Build dependable analytics models that make trusted data easier for every team to use." },
+			{ title: "Customer Insights Manager", company: "Kindred Market", location: "Chicago, IL", mode: "onsite", salary: 116000, salaryLabel: "$103k - $129k", skills: ["customer insights", "Excel", "present findings", "marketing", "research", "stakeholder"], summary: "Bring customer behavior and research together to shape more thoughtful experiences." },
+			{ title: "Product Operations Analyst", company: "Relay Health", location: "Boston, MA", mode: "hybrid", salary: 109000, salaryLabel: "$96k - $122k", skills: ["product", "operations", "KPI", "SQL", "dashboards", "cross-functional"], summary: "Help product teams build a strong operating rhythm with useful metrics and crisp analysis." },
+			{ title: "Marketing Analytics Lead", company: "Brightwell", location: "Remote - US", mode: "remote", salary: 132000, salaryLabel: "$118k - $146k", skills: ["marketing", "SQL", "Tableau", "A/B testing", "Python", "customer"], summary: "Connect campaign performance to customer outcomes and guide investment with evidence." },
+			{ title: "Data & Strategy Associate", company: "Openlane", location: "Austin, TX", mode: "onsite", salary: 102000, salaryLabel: "$91k - $113k", skills: ["Excel", "SQL", "business", "present findings", "KPI", "analytics"], summary: "Work across teams to answer high-impact questions and turn analysis into practical action." }
+		];
+
+		const profileInput = document.querySelector("#profile-text");
+		const list = document.querySelector("#matches-list");
+		let currentMatches = [];
+		const savedRoleStorageKey = "nextrole-saved-roles";
+		let savedRoleIds = new Set();
+		try {
+			savedRoleIds = new Set(JSON.parse(localStorage.getItem(savedRoleStorageKey) || "[]").filter(id => Number.isInteger(id) && roles[id]));
+		} catch (error) {
+			savedRoleIds = new Set();
+		}
+		let showSavedOnly = false;
+
+		function escapeHtml(value) {
+			return value.replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
+		}
+
+		function matchingTerms(profile, terms) {
+			const text = profile.toLowerCase();
+			return terms.filter(term => {
+				const escaped = term.toLowerCase().replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+				return new RegExp(`\\b${escaped}\\b`, "i").test(text);
+			});
+		}
+
+		function analyzeProfile(profile) {
+			const cleanProfile = profile.trim();
+			if (cleanProfile.length < 35) {
+				document.querySelector("#summary-text").textContent = "Add a little more profile detail to get useful matches.";
+				profileInput.focus();
+				return;
+			}
+			currentMatches = roles.map((role, index) => {
+				const matched = matchingTerms(cleanProfile, role.skills);
+				return { ...role, id: index, matched, score: Math.round((matched.length / role.skills.length) * 100) };
+			}).sort((first, second) => second.score - first.score);
+			document.querySelector("#summary-text").textContent = `${currentMatches[0].matched.length} relevant skills found in your profile. Scores reflect keyword overlap, not a hiring prediction.`;
+			renderRoles();
+		}
+
+		function renderRoles() {
+			const query = document.querySelector("#role-search").value.trim().toLowerCase();
+			const mode = document.querySelector("#mode-filter").value;
+			const sort = document.querySelector("#sort-filter").value;
+			const visible = currentMatches.filter(role => {
+				const searchable = [role.title, role.company, role.location, role.summary, ...role.skills].join(" ").toLowerCase();
+				return (!query || searchable.includes(query))
+					&& (mode === "all" || role.mode === mode)
+					&& (!showSavedOnly || savedRoleIds.has(role.id));
+			});
+			if (sort === "salary") visible.sort((first, second) => second.salary - first.salary);
+			if (sort === "title") visible.sort((first, second) => first.title.localeCompare(second.title));
+			const focusedRoleId = document.activeElement?.dataset.saveRole;
+			document.querySelector("#result-count").innerHTML = `<strong>${visible.length}</strong><span>${visible.length === 1 ? "role" : "roles"} found</span>`;
+			document.querySelector("#saved-count").textContent = savedRoleIds.size;
+			document.querySelector("#results-toolbar").hidden = currentMatches.length === 0;
+			list.innerHTML = visible.map((role, index) => `
+				<article class="role-row" style="--row-index:${index}">
+					<div class="role-score ${role.score >= 75 ? "strong-score" : ""}" style="--score:${role.score}%"><strong>${role.score}%</strong><span>match</span></div>
+					<div class="role-main">
+						<div class="role-topline"><div>${index === 0 ? '<span class="role-fit">Strongest match</span>' : ""}<h3>${escapeHtml(role.title)}</h3><p class="company-line">${escapeHtml(role.company)} <span class="company-divider">/</span> ${escapeHtml(role.location)}</p></div><button class="save-button ${savedRoleIds.has(role.id) ? "is-saved" : ""}" type="button" data-save-role="${role.id}" data-role-title="${escapeHtml(role.title)}" aria-label="${savedRoleIds.has(role.id) ? "Remove" : "Save"} ${escapeHtml(role.title)} ${savedRoleIds.has(role.id) ? "from" : "to"} saved roles" aria-pressed="${savedRoleIds.has(role.id)}"><span aria-hidden="true">${savedRoleIds.has(role.id) ? "&#9733;" : "&#9734;"}</span></button></div>
+						<div class="role-meta"><span class="work-mode">${role.mode === "onsite" ? "On-site" : role.mode[0].toUpperCase() + role.mode.slice(1)}</span><span>${role.salaryLabel}</span></div>
+						<p class="role-summary">${escapeHtml(role.summary)}</p>
+						<div class="role-bottomline">
+							<div class="skill-tags">${(role.matched.length ? role.matched : ["Adjacent experience"]).slice(0, 3).map(skill => `<span>${escapeHtml(skill)}</span>`).join("")}</div>
+							<button class="why-button" type="button" data-role-details="${role.id}" data-role-title="${escapeHtml(role.title)}" aria-label="Explore role details for ${escapeHtml(role.title)}" aria-expanded="false" aria-controls="role-detail-${role.id}"><span aria-hidden="true">+</span>Explore role</button>
+						</div>
+						<div class="role-detail" id="role-detail-${role.id}" aria-labelledby="role-detail-title-${role.id}" hidden>
+							<h4 id="role-detail-title-${role.id}">Role snapshot</h4>
+							<p>${escapeHtml(role.summary)}</p>
+							<h5>Skills considered for this role</h5>
+							<div class="skill-tags">${role.skills.map(skill => `<span class="${role.matched.includes(skill) ? "skill-found" : "skill-gap"}">${escapeHtml(skill)}</span>`).join("")}</div>
+							<div class="role-fit-detail">
+								<p><strong>Found in your profile</strong><span>${role.matched.length ? role.matched.map(escapeHtml).join(", ") : "No direct keyword matches yet"}</span></p>
+								<p><strong>Not found in your profile</strong><span>${role.skills.filter(skill => !role.matched.includes(skill)).map(escapeHtml).join(", ") || "All listed skills had a match"}</span></p>
+							</div>
+						</div>
+					</div>
+				</article>`).join("");
+			list.querySelectorAll("[data-save-role]").forEach(button => button.addEventListener("click", () => {
+				const roleId = Number(button.dataset.saveRole);
+				if (savedRoleIds.has(roleId)) savedRoleIds.delete(roleId);
+				else savedRoleIds.add(roleId);
+				try {
+					localStorage.setItem(savedRoleStorageKey, JSON.stringify([...savedRoleIds]));
+				} catch (error) {}
+				renderRoles();
+				list.querySelector(`[data-save-role="${roleId}"]`)?.focus();
+			}));
+				list.querySelectorAll("[data-role-details]").forEach(button => button.addEventListener("click", () => {
+					const expanded = button.getAttribute("aria-expanded") !== "true";
+					button.setAttribute("aria-expanded", String(expanded));
+					button.setAttribute("aria-label", `${expanded ? "Hide" : "Explore"} role details for ${button.dataset.roleTitle}`);
+					button.querySelector("span").textContent = expanded ? "-" : "+";
+					button.lastChild.textContent = expanded ? "Hide details" : "Explore role";
+					document.querySelector(`#${button.getAttribute("aria-controls")}`).hidden = !expanded;
+				}));
+				if (focusedRoleId !== undefined) list.querySelector(`[data-save-role="${focusedRoleId}"]`)?.focus();
+			document.querySelector("#empty-state").hidden = visible.length > 0;
+			if (!visible.length) {
+					document.querySelector("#empty-title").textContent = currentMatches.length ? (showSavedOnly ? "No saved roles match" : "No roles match these filters") : "Your matches will show up here";
+					document.querySelector("#empty-copy").textContent = currentMatches.length ? "Adjust your search or filters to see more roles." : "Upload a profile or paste your experience to get started.";
+			}
+			document.querySelector("#match-summary").hidden = currentMatches.length === 0;
+		}
+
+		function setTab(tabName) {
+			const isUpload = tabName === "upload";
+			document.querySelector("#upload-tab").classList.toggle("selected", isUpload);
+			document.querySelector("#upload-tab").setAttribute("aria-selected", String(isUpload));
+			document.querySelector("#paste-tab").classList.toggle("selected", !isUpload);
+			document.querySelector("#paste-tab").setAttribute("aria-selected", String(!isUpload));
+			document.querySelector("#upload-panel").hidden = !isUpload;
+			document.querySelector("#paste-panel").hidden = isUpload;
+		}
+
+		async function readProfileFile(file) {
+			const status = document.querySelector("#upload-status");
+			if (!file) return;
+			if (file.size > 10 * 1024 * 1024) {
+					status.textContent = "That file is over 10 MB. Choose a smaller PDF, Word document, or text file.";
+				return;
+			}
+			try {
+				let text;
+				const extension = file.name.split(".").pop().toLowerCase();
+				if (extension === "pdf" || file.type === "application/pdf") {
+					status.textContent = "Reading your PDF locally...";
+					const pdfjs = await import("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.min.mjs");
+					pdfjs.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/4.10.38/pdf.worker.min.mjs";
+					const pdf = await pdfjs.getDocument({ data: await file.arrayBuffer() }).promise;
+					const pages = [];
+					const pagesNeedingOcr = [];
+					for (let pageIndex = 0; pageIndex < pdf.numPages; pageIndex++) {
+						const page = await pdf.getPage(pageIndex + 1);
+						const content = await page.getTextContent();
+						pages[pageIndex] = content.items.map(item => item.str).join(" ").trim();
+						if (pages[pageIndex].length < 40) pagesNeedingOcr.push({ page, pageIndex, embeddedText: pages[pageIndex] });
+					}
+					if (pagesNeedingOcr.length) {
+						status.textContent = "Scanned or image-based pages found. Starting local OCR; this may take a moment...";
+						const tesseractModule = await import("https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/+esm");
+						const createWorker = tesseractModule.createWorker || tesseractModule.default?.createWorker;
+						if (!createWorker) throw new Error("OCR could not be started. Check your internet connection, then try again or paste your resume text.");
+						const worker = await createWorker("eng");
+						try {
+							for (let index = 0; index < pagesNeedingOcr.length; index++) {
+								const { page, pageIndex, embeddedText } = pagesNeedingOcr[index];
+								status.textContent = `Reading scanned page ${index + 1} of ${pagesNeedingOcr.length} with OCR...`;
+								const viewport = page.getViewport({ scale: 2 });
+								const canvas = document.createElement("canvas");
+								canvas.width = viewport.width;
+								canvas.height = viewport.height;
+								await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+								const result = await worker.recognize(canvas);
+								const recognizedText = result.data.text.trim();
+								pages[pageIndex] = recognizedText.length > embeddedText.length ? recognizedText : embeddedText;
+								canvas.width = 0;
+								canvas.height = 0;
+							}
+						} finally {
+							await worker.terminate();
+						}
+					}
+					text = pages.join("\n");
+				} else if (extension === "docx" || file.type === "application/vnd.openxmlformats-officedocument.wordprocessingml.document") {
+					status.textContent = "Reading your Word document locally...";
+					const mammothModule = await import("https://cdn.jsdelivr.net/npm/mammoth@1.9.0/+esm");
+					const mammoth = mammothModule.default || mammothModule;
+					const result = await mammoth.extractRawText({ arrayBuffer: await file.arrayBuffer() });
+					text = result.value;
+				} else if (["txt", "md"].includes(extension) || file.type === "text/plain") {
+					text = await file.text();
+				} else {
+					throw new Error("Unsupported file type. Choose a PDF, Word document (.docx), or plain text file.");
+				}
+				if (!text.trim()) throw new Error("No readable text was found. Try a clearer scan or paste your resume text instead.");
+				profileInput.value = text;
+				updateCharacterCount();
+				setTab("paste");
+				document.querySelector("#upload-status").textContent = `${file.name} is ready. Your matches are below.`;
+				analyzeProfile(text);
+			} catch (error) {
+				status.textContent = error.message || "We could not read that file. Try a text file or paste your profile instead.";
+			}
+		}
+
+		function updateCharacterCount() {
+			const count = profileInput.value.length;
+			document.querySelector("#character-count").textContent = `${count.toLocaleString()} ${count === 1 ? "character" : "characters"}`;
+		}
+
+		const authDialog = document.querySelector("#auth-dialog");
+		let authMode = "signin";
+		let authClient = null;
+		let authSetupMessage = "";
+		const authConfig = window.NEXTROLE_SUPABASE_CONFIG;
+
+		if (!window.supabase?.createClient) {
+			authSetupMessage = "Could not load the authentication service. Check your internet connection and reload.";
+		} else if (!authConfig?.url || !authConfig?.anonKey) {
+			authSetupMessage = "Account signup is unavailable until you add your Supabase project URL and public anon key to supabase-config.js, enable Email auth, and allow this app URL under Authentication > URL Configuration > Redirect URLs. Never use a service_role key in browser code.";
+		} else {
+			try {
+				authClient = window.supabase.createClient(authConfig.url, authConfig.anonKey);
+			} catch (error) {
+				authSetupMessage = "The Supabase settings are invalid. Check the project URL and public anon key in supabase-config.js.";
+			}
+		}
+
+		function showAuthNotice(message, isError = false) {
+			const notice = document.querySelector("#auth-notice");
+			notice.textContent = message;
+			notice.classList.toggle("is-error", isError);
+		}
+
+		function setAuthMode(mode) {
+			authMode = mode;
+			const signingUp = mode === "signup";
+			document.querySelector("#auth-title").textContent = signingUp ? "Create your account" : "Welcome back";
+			document.querySelector("#auth-description").textContent = signingUp ? "Create a secure account to return to Next Role." : "Sign in to continue exploring your next role.";
+			document.querySelector("#name-field").hidden = !signingUp;
+			document.querySelector("#auth-name").required = signingUp;
+			document.querySelector("#auth-password").autocomplete = signingUp ? "new-password" : "current-password";
+			document.querySelector("#auth-submit span").textContent = signingUp ? "Create account" : "Sign in";
+			document.querySelector("#auth-switch").innerHTML = signingUp
+				? 'Already have an account? <button type="button" data-auth-mode="signin">Sign in</button>'
+				: 'New to Next Role? <button type="button" data-auth-mode="signup">Create an account</button>';
+			showAuthNotice(authSetupMessage || "Your password is sent securely to your Supabase project.", Boolean(authSetupMessage));
+		}
+
+		function updateAccount(user) {
+			const signedIn = Boolean(user);
+			document.querySelectorAll(".account-actions [data-auth-mode]").forEach(button => { button.hidden = signedIn; });
+			document.querySelector("#account-email").hidden = !signedIn;
+			document.querySelector("#account-email").textContent = user?.email || "";
+			document.querySelector("#signout-button").hidden = !signedIn;
+		}
+
+		async function submitAuth(event) {
+			event.preventDefault();
+			if (!authClient) {
+				showAuthNotice(authSetupMessage || "Authentication is not configured yet.", true);
+				return;
+			}
+
+			const email = document.querySelector("#auth-email").value.trim();
+			const password = document.querySelector("#auth-password").value;
+			const submitButton = document.querySelector("#auth-submit");
+			submitButton.disabled = true;
+			submitButton.querySelector("span").textContent = authMode === "signup" ? "Creating account..." : "Signing in...";
+			showAuthNotice("Connecting securely to Supabase...");
+
+			try {
+				if (authMode === "signup") {
+					const name = document.querySelector("#auth-name").value.trim();
+					const signupOptions = { data: { full_name: name } };
+					if (["http:", "https:"].includes(window.location.protocol)) {
+						signupOptions.emailRedirectTo = window.location.href.split("#")[0];
+					}
+					const { data, error } = await authClient.auth.signUp({
+						email,
+						password,
+						options: signupOptions
+					});
+					if (error) throw error;
+					if (data.session) {
+						showAuthNotice("Your account is ready. You are signed in.");
+						authDialog.close();
+					} else {
+						showAuthNotice("Check your email for a confirmation link to finish creating your account.");
+					}
+				} else {
+					const { error } = await authClient.auth.signInWithPassword({ email, password });
+					if (error) throw error;
+					showAuthNotice("You are signed in.");
+					authDialog.close();
+				}
+			} catch (error) {
+				showAuthNotice(error.message || "Authentication failed. Please try again.", true);
+			} finally {
+				submitButton.disabled = false;
+				submitButton.querySelector("span").textContent = authMode === "signup" ? "Create account" : "Sign in";
+			}
+		}
+
+		document.querySelectorAll("[data-auth-mode]").forEach(button => button.addEventListener("click", () => {
+			setAuthMode(button.dataset.authMode);
+			if (!authDialog.open) authDialog.showModal();
+		}));
+		document.querySelector("#close-auth").addEventListener("click", () => authDialog.close());
+		document.querySelector("#auth-form").addEventListener("submit", submitAuth);
+		document.querySelector("#auth-switch").addEventListener("click", event => {
+			const button = event.target.closest("[data-auth-mode]");
+			if (button) setAuthMode(button.dataset.authMode);
+		});
+		document.querySelector("#signout-button").addEventListener("click", async () => {
+			if (!authClient) return;
+			try {
+				const { error } = await authClient.auth.signOut();
+				if (error) showAuthNotice(error.message, true);
+			} catch (error) {
+				showAuthNotice(error.message || "Could not sign out. Please try again.", true);
+			}
+		});
+		if (authClient) {
+			authClient.auth.onAuthStateChange((_event, session) => updateAccount(session?.user));
+			authClient.auth.getSession().then(({ data }) => updateAccount(data.session?.user));
+		} else {
+			updateAccount(null);
+		}
+		authDialog.addEventListener("click", event => {
+			if (event.target === authDialog) authDialog.close();
+		});
+
+		document.querySelector("#upload-tab").addEventListener("click", () => setTab("upload"));
+		document.querySelector("#paste-tab").addEventListener("click", () => setTab("paste"));
+		document.querySelector("#analyze-button").addEventListener("click", () => analyzeProfile(profileInput.value));
+		document.querySelector("#role-search").addEventListener("input", renderRoles);
+		document.querySelector("#mode-filter").addEventListener("change", renderRoles);
+		document.querySelector("#sort-filter").addEventListener("change", renderRoles);
+		document.querySelector("#saved-filter").addEventListener("click", event => {
+			showSavedOnly = !showSavedOnly;
+			event.currentTarget.setAttribute("aria-pressed", String(showSavedOnly));
+			event.currentTarget.classList.toggle("filter-active", showSavedOnly);
+			event.currentTarget.querySelector(".saved-star").textContent = showSavedOnly ? "\u2605" : "\u2606";
+			renderRoles();
+		});
+		document.querySelector("#sample-button").addEventListener("click", () => {
+			profileInput.value = sampleProfile;
+			updateCharacterCount();
+			setTab("paste");
+			analyzeProfile(profileInput.value);
+		});
+		document.querySelector("#clear-profile").addEventListener("click", () => {
+			profileInput.value = "";
+			updateCharacterCount();
+			profileInput.focus();
+		});
+		profileInput.addEventListener("input", updateCharacterCount);
+		document.querySelector("#profile-file").addEventListener("change", event => readProfileFile(event.target.files[0]));
+		const dropzone = document.querySelector("#dropzone");
+		["dragenter", "dragover"].forEach(eventName => dropzone.addEventListener(eventName, event => {
+			event.preventDefault();
+			dropzone.classList.add("is-dragging");
+		}));
+		["dragleave", "drop"].forEach(eventName => dropzone.addEventListener(eventName, event => {
+			event.preventDefault();
+			dropzone.classList.remove("is-dragging");
+		}));
+		dropzone.addEventListener("drop", event => readProfileFile(event.dataTransfer.files[0]));
+		updateCharacterCount();
+		renderRoles();
+	</script>
+</body>
+</html>
